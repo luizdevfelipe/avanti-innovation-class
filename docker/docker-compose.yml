@@ -1,0 +1,30 @@
+services:
+  app:  
+    build: 
+      context: ./
+      dockerfile: Dockerfile
+    container_name: avanti-test-app
+    restart: always
+    working_dir: /var/www/
+    volumes:
+      - ../:/var/www
+  nginx:
+    image: nginx:1.19-alpine
+    container_name: nginx
+    restart: always
+    ports:
+      - "8000:80"
+    volumes:
+      - ../:/var/www
+      - ./nginx:/etc/nginx/conf.d
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-server
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_DATABASE: '${DB_DATABASE}'
+    ports:
+      - '${FORWARD_DB_PORT:-3306}:3306'
+    volumes:
+      - ./storage/mysql:/var/lib/mysql
+    restart: unless-stopped
