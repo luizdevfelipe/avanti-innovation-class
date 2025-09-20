@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrada</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f1f1f1ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100dvh;
+            width: 100dvw;
+        }
+        h1 {
+            text-align: center;
+            color: #707070ff;
+            font-size: 1.2em;
+        }
+
+        .form-group {
+            margin: 5px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-label {
+            color: #707070ff;
+        }
+
+        .login-form {
+            min-width: 380px;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 1px 1px 5px #707070ff;
+            background-color: white;
+        }
+
+        .info-text {
+            display: block;
+            margin: auto;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #707070ff;
+        }
+        .error-text {
+            display: block;
+            margin: auto;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #000000ff;
+            background-color: #ffa7a7ff;
+            border-radius: 2px;
+            padding: 2px;
+            box-shadow: 1px 1px 5px #707070ff;
+        }
+    </style>
+</head>
+
+<body>
+    <form class="login-form" action="/login" method="post">
+        <h1>Avanti Inventory Management</h1>
+        <legend>Entre com sua conta para ter acesso ao estoque.</legend>
+
+        <div class="form-group">
+            <label class="form-label" for="iemail">Email:</label>
+            <input type="text" name="email" id="iemail" required>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="ipassword">Senha:</label>
+            <input type="password" name="password" id="ipassword" required>
+        </div>
+
+        <div class="form-group">
+            <button type="submit">Entrar</button>
+        </div>
+
+        <?php if (isset($errors)): ?>
+            <?php foreach ($errors as $error): ?>
+                <span class="error-text"><?= htmlspecialchars($error) ?></span>
+            <?php endforeach; ?>
+        <?php endif; ?>
+
+        <span class="info-text">Esqueceu sua senha? Contate um administrador.</span>
+    </form>
+</body>
+
+</html>
