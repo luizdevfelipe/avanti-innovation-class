@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         stopOnFailure="false"
+         processIsolation="false"
+         backupGlobals="false"
+         cacheDirectory=".phpunit.cache">
+
+    <!-- Test Suites -->
+    <testsuites>
+        <testsuite name="Test Suite">
+            <directory>src/tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <!-- Source Code for Coverage -->
+    <source>
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+        <exclude>
+            <directory>src/tests</directory>
+            <directory>vendor</directory>
+        </exclude>
+    </source>
+
+    <!-- Coverage Reports -->
+    <coverage>
+        <report>
+            <html outputDirectory="coverage/html"/>
+            <text outputFile="coverage/coverage.txt"/>
+            <clover outputFile="coverage/clover.xml"/>
+        </report>
+    </coverage>
+
+    <!-- Logging -->
+    <logging>
+        <junit outputFile="reports/junit.xml"/>
+    </logging>
+
+    <!-- PHP Settings -->
+    <php>
+        <ini name="error_reporting" value="-1" />
+        <ini name="memory_limit" value="1G" />
+    </php>
+</phpunit>
