@@ -27,13 +27,13 @@
     </source>
 
     <!-- Coverage Reports -->
-    <coverage>
+    <!-- <coverage>
         <report>
             <html outputDirectory="coverage/html"/>
             <text outputFile="coverage/coverage.txt"/>
             <clover outputFile="coverage/clover.xml"/>
         </report>
-    </coverage>
+    </coverage> -->
 
     <!-- Logging -->
     <logging>
