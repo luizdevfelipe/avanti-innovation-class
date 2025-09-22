@@ -51,12 +51,12 @@
 
         <div class="form-group">
             <label class="form-label" for="iemail">Email:</label>
-            <input type="text" name="email" id="iemail" required>
+            <input type="email" name="email" id="iemail" required>
         </div>
 
         <div class="form-group">
             <label class="form-label" for="ipassword">Senha:</label>
-            <input type="password" name="password" id="ipassword" required>
+            <input type="password" name="password" id="ipassword" required minlength="6">
         </div>
 
         <div class="form-group">
