@@ -18,6 +18,10 @@ class AuthController
      */
     public function loginView()
     {
+        if (isset($_SESSION['user_id'])) {
+            header('Location: /dashboard');
+            exit;
+        }
         return View::render('auth/login');
     }
 
@@ -27,24 +31,36 @@ class AuthController
     public function checkCredentials()
     {
         $data = $this->request->input();
-        $validatedData = $this->request->validate($data, [
+        $errors = $this->request->validate($data, [
             'email' => ['required', 'email'],
             'password' => ['required', 'string']
         ]);
 
-        if (!empty($validatedData)) {
-            return View::render('auth/login', ['errors' => $validatedData]);
+        if (!empty($errors)) {
+            return View::render('auth/login', ['errors' => $errors]);
         }
 
         $user = $this->userService->getUserDataByEmail($data['email']);
 
         if ($user && $data['password'] === $user['password']) {
             // Credenciais válidas, iniciar sessão
+            session_regenerate_id();
             $_SESSION['user_id'] = $user['id'];
             header('Location: /dashboard');
             exit;
         }
 
         return View::render('auth/login', ['errors' => ['Credenciais inválidas.']]);
+    }
+
+    /**
+     * Encerra a sessão do usuário.
+     */
+    public function logout()
+    {
+        session_unset();
+        session_destroy();
+        header('Location: /login');
+        exit;
     }
 }
