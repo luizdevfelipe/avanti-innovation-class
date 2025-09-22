@@ -35,14 +35,20 @@ class Request
                     if ($rule === 'string' && !is_string($value)) {
                         $errors[] = "$field deve ser uma palavra.";
                     }
+                    if ($rule === 'string:null' && $value !== null && $value !== '' && !is_string($value)) {
+                        $errors[] = "$field deve ser uma palavra ou vazio.";
+                    }
                     if ($rule === 'float' && !is_numeric($value)) {
                         $errors[] = "$field deve ser um número decimal.";
+                    }
+                    if ($rule === 'float:null' && $value !== null && $value !== '' && !is_numeric($value)) {
+                        $errors[] = "$field deve ser um número decimal ou vazio.";
                     }
                     if ($rule === 'integer' && (filter_var($value, FILTER_VALIDATE_INT) === false)) {
                         $errors[] = "$field deve ser um número inteiro.";
                     }
-                    if ($rule === 'float:null' && !empty($value) && !is_numeric($value)) {
-                        $errors[] = "$field deve ser um número decimal ou vazio.";
+                    if ($rule === 'integer:null' && $value !== null && $value !== '' && (filter_var($value, FILTER_VALIDATE_INT) === false)) {
+                        $errors[] = "$field deve ser um número inteiro ou vazio.";
                     }
                     if ($rule === 'email' && !filter_var($value, FILTER_VALIDATE_EMAIL)) {
                         $errors[] = "Deve ser um endereço de email válido.";
