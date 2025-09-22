@@ -1,28 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entrada</title>
+    <link rel="stylesheet" href="/../resources/style.css">
     <style>
         body {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f1f1f1ff;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100dvh;
             width: 100dvw;
         }
-        h1 {
-            text-align: center;
-            color: #707070ff;
-            font-size: 1.2em;
-        }
+        
 
         .form-group {
             margin: 5px;
@@ -48,18 +40,7 @@
             text-align: center;
             font-size: 0.8rem;
             color: #707070ff;
-        }
-        .error-text {
-            display: block;
-            margin: auto;
-            text-align: center;
-            font-size: 0.8rem;
-            color: #000000ff;
-            background-color: #ffa7a7ff;
-            border-radius: 2px;
-            padding: 2px;
-            box-shadow: 1px 1px 5px #707070ff;
-        }
+        }       
     </style>
 </head>
 
