@@ -126,7 +126,7 @@ class BaseModel
         $data = array_filter($data, fn($value) => $value !== null && $value !== '');
 
         if (empty($data)) {
-            throw new InvalidArgumentException("Nothing to insert.");
+            throw new InvalidArgumentException("Nenhum dado para inserir.");
         }
 
         $columns = array_keys($data);

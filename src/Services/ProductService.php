@@ -6,9 +6,16 @@ use App\models\ProductModel;
 
 class ProductService
 {
-    public function addProduct(array $data): void
+    public function addProduct(array $data): bool
     {
+        $product = ProductModel::where('SKU', $data['sku']);
+        
+        if (!empty($product)) {
+            return false;
+        }
+        
         ProductModel::insert($data);
+        return true;
     }
 
     public function getAllProducts(): array

@@ -47,6 +47,7 @@ class Router
             $callback = $this->routes[$method][preg_replace('/\d+/', '{id}', $cleanRoute)];
             $args = preg_match('/\d+/', $cleanRoute, $matches) ? $matches[0] : null;
         } elseif (empty($this->routes[$method][$cleanRoute])) {
+            // exit;
             // Verifica se a rota existe, caso contrário, usa a rota principal ou lança exceção
             if (isset($this->routes[$method][$this->mainRoute])) {
                 header("Location: {$this->mainRoute}", true, 302);

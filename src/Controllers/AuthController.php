@@ -50,7 +50,7 @@ class AuthController
             exit;
         }
 
-        return View::render('auth/login', ['errors' => ['Credenciais inválidas.']]);
+        return View::render('auth/login', ['errors' => ['Credenciais inválidas, verifique seu usuário e senha']]);
     }
 
     /**

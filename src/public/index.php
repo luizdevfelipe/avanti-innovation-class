@@ -5,6 +5,7 @@ use App\Controllers\AuthController;
 use App\Controllers\ProductsController;
 use App\Core\Application;
 use App\Core\Router;
+use App\Core\View;
 
 session_set_cookie_params(['secure' => true, 'httponly' => true, 'samesite' => 'lax']);
 session_start();
@@ -35,8 +36,12 @@ try {
     $response = $router->dispatch($_SERVER["REQUEST_URI"], $_SERVER["REQUEST_METHOD"]);
 } catch (Exception $e) {
     http_response_code(500);
-    echo "Erro interno do servidor: " . $e->getMessage();
+    echo View::render('error', ['errors' => [$e->getMessage()]]);
     exit;
 }
 
 echo $response ?? 'No response found for the route.';
+
+if(isset($_SESSION['errors'])) {
+    unset($_SESSION['errors']); 
+}

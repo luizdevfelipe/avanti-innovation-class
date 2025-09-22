@@ -55,7 +55,11 @@ class ProductsController
             $this->dashboardViewErrors($errors);
         }
 
-        $this->productService->addProduct($data);
+        $is_newProduct = $this->productService->addProduct($data);
+
+        if (!$is_newProduct) {
+            $_SESSION['errors'][] = 'SKU já existe!'; 
+        }
 
         return header('Location: /dashboard');
     }
