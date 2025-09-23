@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entrada</title>
     <link rel="stylesheet" href="/../resources/style.css">
+    <script src="/../resources/script.js" defer></script>
     <style>
         body {
             display: flex;
@@ -109,14 +110,27 @@
             </button>
         </div>
 
-        <?php if (isset($errors)): ?>
-            <?php foreach ($errors as $error): ?>
-                <span class="error-text"><?= htmlspecialchars($error) ?></span>
+        <?php if (isset($_SESSION['errors'])): ?>
+            <?php foreach ($_SESSION['errors'] as $error): ?>
+                <span class="error-text" id="error-span" style="display: none;"><?= htmlspecialchars($error) ?></span>
             <?php endforeach; ?>
         <?php endif; ?>
 
         <span class="info-text">Esqueceu sua senha? Contate um administrador.</span>
     </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const errorSpan = document.getElementById('error-span');
+            if (errorSpan) {
+                const content = errorSpan.innerText;
+                const splitContent = content.split(' ');
+                const translation = `"${getTranslation(splitContent[0])}" ${splitContent.slice(1).join(' ')}`;
+                errorSpan.innerText = translation;
+                errorSpan.style.display = 'block';
+            }
+        });
+    </script>
 </body>
 
 </html>

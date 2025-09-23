@@ -37,7 +37,9 @@ class AuthController
         ]);
 
         if (!empty($errors)) {
-            return View::render('auth/login', ['errors' => $errors]);
+            $_SESSION['errors'] = $errors;
+            header('Location: /login');
+            exit;
         }
 
         $user = $this->userService->getUserDataByEmail($data['email']);
@@ -50,7 +52,9 @@ class AuthController
             exit;
         }
 
-        return View::render('auth/login', ['errors' => ['Credenciais inválidas, verifique seu usuário e senha']]);
+        $_SESSION['errors'] = ['Credenciais inválidas, verifique seu usuário e senha.'];
+        header('Location: /login');
+        exit;
     }
 
     /**

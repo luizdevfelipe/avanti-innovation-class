@@ -51,7 +51,7 @@ class Request
                         $errors[] = "$field deve ser um número inteiro ou vazio.";
                     }
                     if ($rule === 'email' && !filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                        $errors[] = "Deve ser um endereço de email válido.";
+                        $errors[] = "$field deve ser um endereço de email válido.";
                     }
                 }
             }

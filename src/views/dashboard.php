@@ -8,25 +8,6 @@
     <link rel="stylesheet" href="/../resources/style.css">
     <script src="/../resources/script.js" defer></script>
     <style>
-        @media screen and (max-width: 600px) {
-            #productsH2 {
-                display: none;
-            }
-
-            section {
-                margin-top: 5px;
-            }
-
-            #searchContainer {
-                max-width: 200px;
-            }
-
-            #addProduct {
-                padding: 5px 10px;
-                font-size: 0.9rem;
-            }
-        }
-
         body.modal-open {
             overflow: hidden;
         }
@@ -243,6 +224,25 @@
             background-color: #2a5d91;
             transform: translateY(0);
         }
+
+        @media screen and (max-width: 600px) {
+            #productsH2 {
+                display: none;
+            }
+
+            section {
+                margin: 5px;
+            }
+
+            #searchContainer {
+                max-width: 200px;
+            }
+
+            #addProduct {
+                padding: 6px;
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 
@@ -405,7 +405,7 @@
 
                 <?php if (isset($_SESSION['errors'])): ?>
                     <?php foreach ($_SESSION['errors'] as $error): ?>
-                        <span class="error-text"><?= htmlspecialchars($error) ?></span>
+                        <span class="error-text" id="error-span" style="display: none;"><?= htmlspecialchars($error) ?></span>
                     <?php endforeach; ?>
                 <?php endif; ?>
             </form>
@@ -536,14 +536,26 @@
                         <td id="product-quantity-${product.id}">${product.quantity ?? 0}</td>
                         <td id="product-price-${product.id}">R$ ${Number(product.price ?? 0).toFixed(2).replace('.', ',')}</td>
                         <td>
-                            <button class="editProduct" data-id="${product.id}">Editar</button>
-                            <button class="deleteProduct" data-sku="${product.SKU}" data-id="${product.id}">Excluir</button>
+                            <button class="editProduct button" data-id="${product.id}"><svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"> <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z" /> </svg>Editar</button> <button class="deleteProduct button deleteButton" data-sku="${product.SKU}" data-id="${product.id}"><svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"> <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 7h12M6 12h12m-6 5h6M4 7h1M4 12h1m-1 5h1M4 7h1M4 12h1m-1 5h1" /></svg>Excluir</button>
                         </td>
                     `;
                         document.querySelector('table tbody').appendChild(row);
                     });
                 });
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verifica se há mensagens de erro para exibir
+            const errorSpan = document.getElementById('error-span');
+            if (errorSpan) {
+                const content = errorSpan.innerText;
+                const splitContent = content.split(' ');
+                const translation = `"${getTranslation(splitContent[0])}" ${splitContent.slice(1).join(' ')}`;
+                alert(translation);
+                errorSpan.innerText = translation;
+                errorSpan.style.display = 'block';
+            }
+        });
     </script>
 </body>
 
