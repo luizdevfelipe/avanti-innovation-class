@@ -2,6 +2,12 @@
 
 Um sistema completo de gerenciamento de inventário desenvolvido em **PHP** com arquitetura **MVC**, containerizado com **Docker** e com autenticação de usuários robusta.
 
+<p align="center">
+ <img width="500" height="300" src="https://github.com/user-attachments/assets/65cc3f68-3458-4a15-8192-e37ca2a1a720" alt="Dashboard">
+</p>
+
+## 🖼️ Veja Imagens [Aqui](https://github.com/luizdevfelipe/avanti-innovation-class/issues/1)
+
 ## 🚀 Tecnologias Utilizadas
 
 - **PHP 8.1** com PHP-FPM
