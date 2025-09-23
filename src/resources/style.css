@@ -21,6 +21,10 @@ svg {
     vertical-align: middle;
 }
 
+textarea {
+    resize: vertical;
+}
+
 .error-text {
     display: block;
     margin: 15px auto;
@@ -36,7 +40,7 @@ svg {
 }
 
 .form-group {
-    max-width: 95%;
+    max-width: 99%;
     margin-bottom: 15px;
 }
 
@@ -56,6 +60,7 @@ svg {
 .form-group input,
 .form-group textarea {
     width: 100%;
+    box-sizing: border-box;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
