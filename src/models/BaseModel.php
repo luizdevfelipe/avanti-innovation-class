@@ -7,9 +7,11 @@ use InvalidArgumentException;
 
 class BaseModel
 {
+    protected static \PDO $connection;
     protected static string $table;
     protected static array $fillable = [];
-    protected static \PDO $connection;
+    private static string $query = '';
+    private static array $values = [];
 
     private static function getPDO(): \PDO
     {
@@ -23,14 +25,49 @@ class BaseModel
     /**
      * Seleciona todos os registros da tabela.
      * @param string|null $columns As colunas a serem selecionadas, ou null para selecionar todas as colunas.
-     * @return array Retorna um array de registros.
+     * @return self.
      */
-    public static function select(?string $columns = null): array
+    public static function select(?string ...$columns): self
     {
-        $query = "SELECT " . ($columns ?? '*') . " FROM " . static::$table;
-        $stmt = static::getPDO()->prepare($query);
-        $stmt->execute();
+        $query = "SELECT " . (empty($columns) ? '*' : implode(', ', $columns)) . " FROM " . static::$table;
+        self::$query = $query;
+        return new self();
+    }
+    
+    /**
+     * @param string $column O nome da coluna para a condição WHERE.
+     * @param mixed $value O valor a ser comparado na condição WHERE.
+     * @return self
+     */
+    public static function where(string $column, mixed $value): self
+    {
+        $query = self::$query . " WHERE {$column} = ?";
+        self::$query = $query;
+        self::$values = [$value];
+        return new self();
+    }
+    
+    /**
+     * Executa a consulta SQL construída e retorna todos os resultados.
+     * @return array Retorna um array de resultados da consulta.
+     */
+    public function get(): array
+    {
+        $stmt = static::getPDO()->prepare(self::$query);
+        $stmt->execute([...self::$values]);
         return $stmt->fetchAll();
+    }
+
+    /**
+     * Executa a consulta SQL construída e retorna o primeiro resultado.
+     * @return array|null Retorna o primeiro resultado da consulta ou null se nenhum resultado for encontrado.
+     */
+    public function first(): ?array
+    {
+        $stmt = static::getPDO()->prepare(self::$query);
+        $stmt->execute([...self::$values]);
+        $result = $stmt->fetch();
+        return $result ?: null;
     }
 
     /**
@@ -38,7 +75,7 @@ class BaseModel
      * @param array $data Os dados a serem inseridos, onde as chaves são os nomes das colunas.
      * @return bool Retorna true se a inserção for bem-sucedida, caso contrário, false.
      * @throws InvalidArgumentException Se nenhum dado válido for fornecido para inserção.
-     */
+    */
     public static function insert(array $data): bool
     {
         $data = array_intersect_key($data, array_flip(static::$fillable));
@@ -96,20 +133,6 @@ class BaseModel
         $stmt->execute([$id]);
         $result = $stmt->fetch();
         return $result ?: null;
-    }
-
-    /**
-     * @param string $column O nome da coluna para a condição WHERE.
-     * @param mixed $value O valor a ser comparado na condição WHERE.
-     * @return array Retorna um array de registros que correspondem à condição.
-     */
-    public static function where(string $column, mixed $value): array
-    {
-        $query = "SELECT * FROM " . static::$table . " WHERE {$column} = ?";
-        $stmt = static::getPDO()->prepare($query);
-        $stmt->execute([$value]);
-        $result = $stmt->fetchAll();
-        return count($result) == 1 ? $result[0] : $result;
     }
 
     /**

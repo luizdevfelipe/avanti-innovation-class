@@ -8,7 +8,7 @@ class ProductService
 {
     public function addProduct(array $data): bool
     {
-        $product = ProductModel::where('SKU', $data['sku']);
+        $product = ProductModel::select('SKU')->where('SKU', $data['sku'])->first();
         
         if (!empty($product)) {
             return false;
@@ -20,12 +20,12 @@ class ProductService
 
     public function getAllProducts(): array
     {
-        return ProductModel::select();
+        return ProductModel::select('id', 'SKU', 'name', 'quantity', 'price')->get();
     }
 
     public function getProductById(int $id): ?array
     {
-        return ProductModel::where('id', $id);
+        return ProductModel::select()->where('id', $id)->first();
     }
 
     public function deleteProductById(int $id): void

@@ -8,6 +8,6 @@ class UserService
 {
     public function getUserDataByEmail(string $email): ?array
     {
-        return UserModel::where('email', $email);
+        return UserModel::select()->where('email', $email)->first();
     }
 }
